@@ -34,6 +34,9 @@ CREATE TABLE Order_Item(
     PRIMARY KEY(order_no, product_id),
     FOREIGN KEY(product_id) REFERENCES Product(product_id)
 	ON DELETE CASCADE
+	ON UPDATE CASCADE,
+    FOREIGN KEY(order_no) REFERENCES Orders(order_no)
+	ON DELETE CASCADE
 	ON UPDATE CASCADE
 );
 

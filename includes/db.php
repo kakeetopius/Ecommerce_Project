@@ -37,10 +37,10 @@ class DBCon {
 
         try {
             $query->execute();
-            echo "Query Successful";
+            return true;
         } catch (mysqli_sql_exception $e) {
             echo "Error executing Query: {$e->getMessage()}";
-            die();
+            return false;
         }
 
    }
@@ -58,7 +58,7 @@ class DBCon {
        }
        catch (mysqli_sql_exception $e) {
            echo "Error executing query: {$e->getMessage()}";
-           die();
+           return false;
        }
    }
 
