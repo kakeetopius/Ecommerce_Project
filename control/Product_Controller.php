@@ -9,7 +9,8 @@
             $product_array = array();
             foreach($products as $prod) {
                $pdt_dict = [
-                
+                    "id" => $prod->get_productID(),
+                    "name" =>
                ];
             }
         }
