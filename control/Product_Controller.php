@@ -17,7 +17,7 @@
                         "image" => $prod->get_imagePath(),
                         "season" => $categories['season'],
                         "gender" => $categories['gender'],
-                        "age-group" => $categories['age_group']
+                        "age_group" => $categories['age_group']
                 ];
 
                 $product_array[] = $pdt_dict;
