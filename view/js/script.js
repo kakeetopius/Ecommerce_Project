@@ -97,7 +97,7 @@ export function applyActiveFilters() {
 
     if (selectedSeasons.length > 0) {
 	productsToFilter = productsToFilter.filter(product => 
-	    selectedSeasons.includes(product.season) || product.season === 'all'
+	    selectedSeasons.includes(product.season) || product.season === null
 	);
     }
 
