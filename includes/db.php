@@ -62,8 +62,8 @@ class DBCon {
        }
    }
 
-    function initialise_params() {
-        $config_str = file_get_contents("../config/config.json");
+  function initialise_params() {
+        $config_str = file_get_contents(__DIR__ ."/../config/config.json");
         $configs = json_decode($config_str, true);
         
         if (json_last_error() !== JSON_ERROR_NONE) {
@@ -79,6 +79,16 @@ class DBCon {
         $this->dbname = $configs['dbname'];
     }
 
+    static function setfilepath() {
+        $query = "UPDATE Product SET image_path = ? WHERE product_id = ?";
+        $db = new DBCon();
+        $pstmt = $db->prepareStatement($query);
+        
+        for ($i = 1; $i < 25; $i++) {
+            $path = "/view/images/product{$i}.webp";
+            $pstmt->bind_param("si", $path, $i);
+            $db->execute_query($pstmt);
+        }
+    }
 }
-
 ?>

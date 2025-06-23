@@ -9,21 +9,31 @@
 // will be loaded to the pages with the view pages and
 // sent back]
 // If async json is sent back for js to load in the page.
-
 session_start();
 
 $received_url = $_SERVER['REQUEST_URI'];
+
+if ($received_url === "/") {
+    header("Location: /view/pages/index.html");
+    exit;
+}
+
 $received_url = trim($received_url, "/");
 $segments = explode("/", $received_url);
-
-$route = $segments[1];
-$function = $segments[2];
+$page = $segments[0];
+$route = $segments[1] ?? null;
+$function = $segments[2] ?? null;
 
 if ($route === "product") {
     switch($function) {
         case 'all':
-            
+            require_once("control/Product_Controller.php"); 
+            header("Content-Type: application/json");
+            echo ProductControl::returnAllProducts();
+            exit;
     }
 }
+
+
 
 ?>

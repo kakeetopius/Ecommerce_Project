@@ -2,35 +2,22 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // --- Product Data Get Product if asynchronously from server(/index.php/product/all) ---
-    const allProducts = [
-        { id: 1, name: 'Silk Blend Blouse', price: 45000.00, image: 'images/product1.webp', category: 'women', season: 'spring' },
-        { id: 2, name: 'Cashmere Knit Sweater', price: 68000.00, image: 'images/product2.webp', category: 'women', season: 'winter' },
-        { id: 3, name: 'Tailored Wool Trousers', price: 52000.00, image: 'images/product3.webp', category: 'men', season: 'fall' },
-        { id: 4, name: 'Linen Summer Shirt', price: 32000.00, image: 'images/product4.webp', category: 'men', season: 'summer' },
-        { id: 5, name: 'Organic Cotton Tee - Boy', price: 9500.00, image: 'images/product5.webp', category: 'kids-boy', season: 'summer' },
-        { id: 6, name: 'Denim Jacket - Girl', price: 15000.00, image: 'images/product6.webp', category: 'kids-girl', season: 'spring' },
-        { id: 7, name: 'Pleated Midi Skirt', price: 49000.00, image: 'images/product7.webp', category: 'women', season: 'fall' },
-        { id: 8, name: 'Leather Ankle Boots', price: 75000.00, image: 'images/product8.webp', category: 'women', season: 'winter' },
-        { id: 9, name: 'Classic Trench Coat', price: 98000.00, image: 'images/product9.webp', category: 'men', season: 'spring' },
-        { id: 10, name: 'Swim Shorts', price: 18000.00, image: 'images/product10.webp', category: 'men', season: 'summer' },
-        { id: 11, name: 'Knitted Cardigan - Boy', price: 12000.00, image: 'images/product11.webp', category: 'kids-boy', season: 'fall' },
-        { id: 12, name: 'Floral Print Dress - Girl', price: 17000.00, image: 'images/product12.webp', category: 'kids-girl', season: 'summer' },
-        { id: 13, name: 'Slim Fit Chinos', price: 35000.00, image: 'images/product13.webp', category: 'men', season: 'spring' },
-        { id: 14, name: 'Wool Scarf', price: 22000.00, image: 'images/product14.webp', category: 'women', season: 'winter' },
-        { id: 15, name: 'Polo Shirt', price: 28000.00, image: 'images/product15.webp', category: 'men', season: 'summer' },
-        { id: 16, name: 'Raincoat - Kids', price: 19000.00, image: 'images/product16.webp', category: 'kids', season: 'fall' },
-        { id: 17, name: 'V-Neck Pullover', price: 42000.00, image: 'images/product17.webp', category: 'men', season: 'winter' },
-        { id: 18, name: 'Satin Camisole Top', price: 29000.00, image: 'images/product18.webp', category: 'women', season: 'summer' },
-        { id: 19, name: 'Corduroy Trousers - Boy', price: 11000.00, image: 'images/product19.webp', category: 'kids-boy', season: 'winter' },
-        { id: 20, name: 'Tulle Skirt - Girl', price: 13000.00, image: 'images/product20.webp', category: 'kids-girl', season: 'spring' },
-        { id: 21, name: 'Leather Belt', price: 19000.00, image: 'images/product21.webp', category: 'men', season: 'all' },
-        { id: 22, name: 'Silk Scarf Print', price: 25000.00, image: 'images/product22.webp', category: 'women', season: 'all' },
-        { id: 23, name: 'Basic Joggers - Kids', price: 10000.00, image: 'images/product23.webp', category: 'kids', season: 'all' },
-        { id: 24, name: 'Sunglasses Aviator', price: 31000.00, image: 'images/product24.webp', category: 'unisex', season: 'summer' },
-    ];
+    
 
-    let currentProducts = [...allProducts];
+
+    async function getProducts() {
+	try {
+	    let resp = await fetch("/index.php/product/all");
+	    let data = await resp.json();
+	    return data;
+	}
+	catch(e) {
+	    console.log("Error: ", e);
+	}
+    }	    
+
     let activeCategory = 'all'; 
+
 
     // --- DOM Elements ---
     const productCatalog = document.getElementById('product-catalog');
@@ -442,6 +429,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // --- Initial Product Load & Setup ---
-    if (mainLink) mainLink.classList.add('active-category'); 
-    renderProducts([...allProducts].sort((a,b) => a.id - b.id)); // Initial sort by ID
+    if (mainLink) mainLink.classList.add('active-category');
+    
+    let currentProducts = null;
+    getProducts()
+    .then(data => {
+	    let allProducts = data;
+	    currentProducts = [...allProducts];	    
+	    renderProducts([...allProducts].sort((a,b) => a.id - b.id)); // Initial sort by ID
+	})
 });

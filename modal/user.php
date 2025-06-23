@@ -1,7 +1,7 @@
 <?php
     
-    require_once("../includes/db.php");
-    require_once("order.php");
+    require_once __DIR__."/../includes/db.php";
+    require_once __DIR__."/order.php";
     
     class User { 
         private $userid = 0;

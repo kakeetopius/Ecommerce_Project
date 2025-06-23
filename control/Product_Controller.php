@@ -1,6 +1,7 @@
 <?php
     
-    require_once("../modal/product.php");
+    
+    require_once __DIR__."/../modal/product.php";
 
     class ProductControl {
 
@@ -8,11 +9,22 @@
             $products = Product::getProducts();
             $product_array = array();
             foreach($products as $prod) {
-               $pdt_dict = [
-                    "id" => $prod->get_productID(),
-                    "name" =>
-               ];
+                $categories = $prod->getCategories();
+                $pdt_dict = [
+                        "id" => $prod->get_productID(),
+                        "name" => $prod->get_productName(),
+                        "price"=> $prod->get_price(),
+                        "image" => $prod->get_imagePath(),
+                        "season" => $categories['season'],
+                        "gender" => $categories['gender'],
+                        "age-group" => $categories['age_group']
+                ];
+
+                $product_array[] = $pdt_dict;
             }
+
+            $products_json = json_encode($product_array, JSON_PRETTY_PRINT | JSON_NUMERIC_CHECK);
+            return $products_json;
         }
 
         public static function showProductByID() {
@@ -27,7 +39,7 @@
 
         }
 
-
     }
 
+    
 ?>

@@ -1,6 +1,6 @@
 <?php
-    require_once("../includes/db.php");
-    require_once("product.php");
+    require_once __DIR__. "/../includes/db.php";
+    require_once __DIR__. "/product.php";
 
     class Order {
         private $order_no = 0;
