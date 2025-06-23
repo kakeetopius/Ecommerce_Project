@@ -1,6 +1,7 @@
 <?php
     
     require_once("../includes/db.php");
+    require_once("order.php");
     
     class User { 
         private $userid = 0;
@@ -9,7 +10,7 @@
         private $email = "";
         private $pass = "";
         private $cart;
-        private Order $orders;
+        private ?Order $orders;
         
         public function __construct($id, $fname, $lname, $email, $pass) {
             $this->userid = $id; 
@@ -17,7 +18,8 @@
             $this->lname = $lname; 
             $this->email = $email; 
             $this->pass = $pass; 
-            $this->cart = array(); 
+            $this->cart = array();
+            $this->orders = null;
         }
         
         
@@ -28,9 +30,9 @@
             $query->bind_param("s", $email);
 
             $users = $dbCon->execute_and_getResult($query);
-            if ($users == false) {
+            if ($users == null) {
                 echo "User doesn't exist";
-                return false;
+                return null;
             }
             $user1 = $users[0];
             
@@ -46,9 +48,9 @@
             $query->bind_param("i", $id);
 
             $users = $dbCon->execute_and_getResult($query);
-            if ($users == false) {
+            if ($users == null) {
                 echo "User doesn't exist";
-                return false;
+                return null;
             }
             $user1 = $users[0];
             
@@ -87,6 +89,86 @@
             if ($status == false) {
                 echo "Error deleting User";
                 return false;
+            }
+        }
+        
+        public function getOrder() {
+            if ($this->orders === null)  { 
+                $this->orders = Order::getUserOrder($this->userid);
+            }
+            
+            return $this->orders;
+
+        }
+         
+        public function getcart() {
+            return $this->cart;
+        }
+        
+        public function setcart(array $cart) {
+            $this->cart = $cart;
+        }
+
+        public function add_to_cart($product_id, $quantity) {
+            if (isset($this->cart[$product_id])) {
+                return;
+            }
+
+            $this->cart[$product_id] = $quantity;
+        }
+        
+        public function remove_from_cart($product_id) {
+            if (!isset($this->cart[$product_id])) {
+                return;
+            }
+
+            unset($this->cart[$product_id]);
+        }
+
+        public function change_qty_in_cart($product_id, $new_quantity) {
+            $this->cart[$product_id] = $new_quantity;
+        }
+
+        public function cartToOrder() {
+            if (count($this->cart) == 0) {
+                return;
+            }
+            
+            $user_order = Order::createOrder($this->userid);
+            
+            if ($user_order == null) {
+                echo "Order object is null\n";
+                return;
+            }
+
+            foreach($this->cart as $pdt_id => $quantity) {
+                $user_order->addtoOrder($pdt_id, $quantity);
+            }
+        }
+
+        public function getcartTotal() {
+            
+            if (count($this->cart) == 0) {
+                return 0;
+            }
+
+            $sum = 0;
+
+            foreach ($this->cart as $pdt_id => $qty) {
+                $product = Product::getProductByID($pdt_id);
+                $sum = $sum + ($product->get_price() * $qty);
+            }
+
+            return $sum;
+        }
+
+        public function empty_cart() {
+            if (count($this->cart) == 0) {
+                return;
+            }
+
+            foreach (array_keys($this->cart) as $key) {
+                unset($this->cart[$key]);
             }
         }
 

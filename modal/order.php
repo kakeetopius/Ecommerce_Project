@@ -37,8 +37,8 @@
             $query->bind_param("i", $userid);
 
             $results = $db->execute_and_getResult($query);
-            if ($results == false) {
-                return false;
+            if ($results == null) {
+                return null;
             }
             
             $order = $results[0];
@@ -78,7 +78,7 @@
             
             $db->execute_query($query);
 
-            if ($items == false) {
+            if ($items == null) {
                 return;
             }
             
@@ -88,6 +88,11 @@
             }
 
         }
+
+        public function confirmOrder() {
+            $this->change_status("confirmed"); 
+        }
+
         private function setOrderItems() {
             $db = new DBCon();
             $query = "SELECT * FROM Order_item WHERE order_no = ?";
@@ -95,8 +100,8 @@
             $query->bind_param("i", $this->order_no);
 
             $results = $db->execute_and_getResult($query);
-            if ($results == false) {
-                return false;
+            if ($results == null) {
+                return null;
             }
 
             foreach($results as $row) {

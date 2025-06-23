@@ -58,7 +58,7 @@ class DBCon {
        }
        catch (mysqli_sql_exception $e) {
            echo "Error executing query: {$e->getMessage()}";
-           return false;
+           return null;
        }
    }
 
@@ -78,6 +78,7 @@ class DBCon {
         $this->port = $configs['port'];
         $this->dbname = $configs['dbname'];
     }
+
 }
 
 ?>

@@ -40,8 +40,8 @@
             $query->bind_param("i", $product_id);
                      
             $results = $db->execute_and_getResult($query);
-            if ($results == false) {
-                return false;
+            if ($results == null) {
+                return null;
             }
             $prod_cat = $results[0];
 
@@ -63,8 +63,8 @@
             $query->bind_param("i", $product_id);
 
             $results = $db->execute_and_getResult($query);
-            if ($results == false) {
-                return false;
+            if ($results == null) {
+                return null;
             }
 
             $prod = $results[0];
