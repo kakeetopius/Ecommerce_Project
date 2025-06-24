@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CartItem</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>Shopping Cart🛒🛒</h1>
+    <section id="product-list" class="product-list"> </section>
+
+    <h1>Your Cart</h1>
+    <div id="cart-container" class = "cart-container"></div>
+
+    <div class="cart-actions">
+    <h2 id="cart-total">Total: $0.00</h2>
+    <button id="clear-cart">Clear Cart</button>
+    <button id="checkout-btn">Checkout</button>
+   </div>
+
+   <h2>Order History</h2>
+   <div id="order-history"></div>
+
+   <button id="clear-history">Clear Order History</button>
+   <div id="order-history"></div>
+
+   <button id="logout-btn" style="display: none;">Logout</button>
+   <span id="welcome-user" style="margin-left: 10px;"></span>
+   
+   <div id="payment-method-container">
+     <h3>Select Payment Method:</h3>
+     <label><input type="radio" name="payment-method" value="mpesa" checked> M-Pesa</label><br>
+     <label><input type="radio" name="payment-method" value="card"> Credit/Debit Card</label><br>
+     <label><input type="radio" name="payment-method" value="paypal"> PayPal</label>
+   </div>
+
+   <script src="cart.js"></script>
+    
+</body>
+</html>
