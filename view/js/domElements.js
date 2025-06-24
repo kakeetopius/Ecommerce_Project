@@ -38,11 +38,13 @@ export const domElements = {
     backToAuthInitialFromLoginBtn : document.getElementById('back-to-auth-initial-from-login'),
     backToAuthInitialFromSignupBtn : document.getElementById('back-to-auth-initial-from-signup'),
 
-    loginNameInput : document.getElementById('login-name'),
-    loginSurnameInput : document.getElementById('login-surname'),
+    loginForm : document.getElementById('login-form'),
+    loginEmailInput : document.getElementById('login-email'),
     loginPasswordInput : document.getElementById('login-password'),
     loginSubmitBtn : document.getElementById('login-submit-btn'),
 
+    signupForm : document.getElementById('signup-form'),
+    signupEmailInput : document.getElementById('signup-email'),
     signupNameInput : document.getElementById('signup-name'),
     signupSurnameInput : document.getElementById('signup-surname'),
     signupPasswordInput : document.getElementById('signup-password'),

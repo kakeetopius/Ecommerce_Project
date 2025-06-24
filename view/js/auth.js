@@ -1,6 +1,7 @@
 import { domElements } from "./domElements.js"
 import { openOverlay, closeOverlay  } from "./script.js";
 
+
 export function setUpAuth() {
     // --- Authentication Logic ---
     if (domElements.loginIcon && domElements.authOverlay && domElements.closeAuthBtn) {
@@ -11,6 +12,7 @@ export function setUpAuth() {
 		closeOverlay(domElements.authOverlay);
 	    }
 	});
+
 	// Show Login Form
 	domElements.showLoginFormBtn.addEventListener('click', () => {
 	    domElements.authInitialSection.classList.add('hidden');
@@ -27,9 +29,11 @@ export function setUpAuth() {
 	});
 	
 	// Handle Signup Submission
-	domElements.signupSubmitBtn.addEventListener('click', () => {
+	domElements.signupForm.addEventListener('submit', (e) => {
+	    e.preventDefault();
 	    const firstName = domElements.signupNameInput.value.trim();
 	    const lastName = domElements.signupSurnameInput.value.trim();
+	    const email = domElements.signupEmailInput.value.trim();
 	    const password = domElements.signupPasswordInput.value;
 
 	    if (!firstName || !lastName || !password) {
@@ -38,23 +42,22 @@ export function setUpAuth() {
 		domElements.authMessage.classList.remove('hidden');
 		return;
 	    }
-	    
-	    signUp(firstName, lastName, password);
+	    signUp(firstName, lastName,email,password);
 
 	});
-
-	domElements.loginSubmitBtn.addEventListener('click', () => {
-	    const firstName = domElements.loginNameInput.value.trim();
-	    const lastName = domElements.loginSurnameInput.value.trim();
+    
+	domElements.loginForm.addEventListener('submit', (e) => {
+	    e.preventDefault();
+	    const email = domElements.loginEmailInput.value;
 	    const password = domElements.loginPasswordInput.value;
 	    
-	    if (!firstName || !lastName || !password) {
+	    if (!email|| !password) {
 		domElements.authMessage.textContent = "Please fill in all fields.";
 		domElements.authMessage.className = 'auth-feedback error';
 		domElements.authMessage.classList.remove('hidden');
 		return;
 	    }
-	    login(firstName, lastName, password);
+	    login(email, password);
 	});
 
 	domElements.backToAuthInitialFromLoginBtn.addEventListener('click', (e) => { 
@@ -66,6 +69,8 @@ export function setUpAuth() {
 		e.preventDefault(); 
 		goBackToAuthInitial(); 
 	});
+
+	getUserInfo();
     }
     else {
 	console.error("Authentication UI elements not found. Check IDs in HTML.");
@@ -80,39 +85,118 @@ function goBackToAuthInitial() {
     domElements.authMessage.classList.add('hidden');
 }
 
-function login(firstName, lastName, password) {
-    const foundUser = simulatedUsers.find(u => 
-	u.firstName.toLowerCase() === firstName.toLowerCase() &&
-	u.lastName.toLowerCase() === lastName.toLowerCase() &&
-	u.password === password
-    );
+async function login(email, password) {
+    try{
+	const response = await fetch("/index.php/user/login", {
+	    method: "POST",
+	    headers: {
+		"Accept": "application/json",
+		"Content-Type": "application/json",
+	    },
+	    body: JSON.stringify(
+		{
+		    "email" : email, 
+		    "password" : password
+		})
+	});
 
-    if (foundUser) {
-	domElements.authMessage.textContent = "Successful login!";
-	domElements.authMessage.className = 'auth-feedback success';
-    } else {
-	domElements.authMessage.textContent = "User not found or incorrect password. Please create an account.";
-	domElements.authMessage.className = 'auth-feedback error';
+	const data = await response.json();
+	if (data.success === true) {
+	    window.alert("Successful login!");
+            domElements.authMessage.textContent = "Successful login!";
+            domElements.authMessage.className = 'auth-feedback success';
+	    window.location.href = "/";
+	}
+	else {
+            domElements.authMessage.textContent = "User not found or incorrect password. Please create an account.";
+            domElements.authMessage.className = 'auth-feedback error';
+	}
+	domElements.authMessage.classList.remove('hidden');
     }
-    domElements.authMessage.classList.remove('hidden');
+    catch(e) {
+	console.error("Fetch: ", e);
+    }
 }
 
-function signUp(firstName, lastName, password) {
+
+async function signUp(firstName, lastName,email, password) {
     
-    const userExists = simulatedUsers.some(u => 
-	u.firstName.toLowerCase() === firstName.toLowerCase() &&
-	u.lastName.toLowerCase() === lastName.toLowerCase()
-    );
+    try{
+	const response = await fetch("/index.php/user/signup", {
+	    method: 'POST',
+	    headers: {
+		"Accept"    : "application/json",
+		'Content-Type': 'application/json'
+	    },
+	    body: JSON.stringify({
+		"fname" : firstName, 
+		"lname": lastName, 
+		"email": email, 
+		"pass" : password,
+	    })
+	});
 
-    if (userExists) {
-	domElements.authMessage.textContent = "A User with this name and surname was found. Please login.";
-	domElements.authMessage.className = 'auth-feedback error';
-    } else {
-	simulatedUsers.push({ firstName, lastName, password });
-	domElements.authMessage.textContent = "Successful sign up! You can now login.";
-	domElements.authMessage.className = 'auth-feedback success';
-	// console.log("Current users:", simulatedUsers); // For debugging
+	const data = await response.json();
+
+	if (data.success === true) {
+	    window.alert("Sign Up Successfull");
+            domElements.authMessage.textContent = "Sign Up Successfull";
+	    domElements.authMessage.className = 'auth-feedback success';
+	    window.location.href = "/"
+	}
+	else {
+            domElements.authMessage.textContent = "User not found or incorrect password. Please create an account.";
+            domElements.authMessage.className = 'auth-feedback error';
+	}
+	domElements.authMessage.classList.remove('hidden');
     }
-    domElements.authMessage.classList.remove('hidden');
+    catch(e) {
+	console.error("Fetch: ", e);
+    }
 
+}
+
+
+function renderUserInfo({ fname, lname, email }) {
+  const overlay = document.getElementById('auth-overlay');
+
+  overlay.innerHTML = `
+    <div class="overlay-content auth-panel">
+      <div class="auth-header">
+        <h2>My Account</h2>
+        <button id="close-auth-btn" class="close-btn" aria-label="Close">×</button>
+      </div>
+
+      <div class="auth-section">
+        <h3>Welcome Back!</h3>
+        <p><strong>First Name:</strong> ${fname}</p>
+        <p><strong>Last Name:</strong> ${lname}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <div style="text-align:center; margin-top: 20px;">
+          <button id="logout-btn" class="auth-button-secondary">Logout</button>
+        </div>
+      </div>
+    </div>
+  `;
+
+    document.getElementById("close-auth-btn").addEventListener('click', () => closeOverlay(domElements.authOverlay));
+
+    document.getElementById("logout-btn").addEventListener('click', () => logout());
+}
+
+
+async function getUserInfo() {
+    const response = await fetch("/index.php/user/userinfo");
+    const data = await response.json();
+
+    if (data.success === false) {
+	return;
+    }
+    
+    renderUserInfo({fname:data.fname, lname:data.lname, email:data.email});
+
+}
+
+async function logout() {
+    window.location.href = "/index.php/user/logout"; 
 }

@@ -1,0 +1,63 @@
+<!-- ===================== authentication overlay (initially hidden) ===================== -->
+<div id="auth-overlay" class="overlay">
+    <div class="overlay-content auth-panel">
+        <div class="auth-header">
+            <h2>my account</h2>
+            <button id="close-auth-btn" class="close-btn" aria-label="close">×</button>
+        </div>
+
+        <!-- initial view for auth panel -->
+        <div id="auth-initial-section" class="auth-section">
+            <button id="show-login-form-btn" class="auth-button">access your account</button>
+            <p class="auth-or-separator"><span>or</span></p>
+            <div class="signup-prompt-inline">
+                <p>don't have an account yet?</p>
+                <button id="show-signup-form-btn" class="auth-button-secondary">create an account</button>
+            </div>
+        </div>
+
+        <!-- login form -->
+        <div id="login-form-section" class="auth-section hidden">
+            <h3>login</h3>
+    <form id="login-form">
+        <div class="form-group">
+        <label for="email">email</label>
+        <input type="email" id="login-email" name="email" required>
+        </div>
+        <div class="form-group">
+        <label for="login-password">password*</label>
+        <input type="password" id="login-password" name="login-password" required>
+        </div>
+        <button type="submit" id="login-submit-btn" class="auth-button">login</button>
+        <p><a href="#" id="back-to-auth-initial-from-login" class="auth-link">back</a></p>
+    </form>
+        </div>
+
+        <!-- signup form -->
+        <div id="signup-form-section" class="auth-section hidden">
+            <h3>create account</h3>
+    <form id="signup-form">
+        <div class="form-group">
+        <label for="signup-name">first name*</label>
+        <input type="text" id="signup-name" name="signup-name" required>
+        </div>
+        <div class="form-group">
+        <label for="signup-surname">last name*</label>
+        <input type="text" id="signup-surname" name="signup-surname" required>
+        </div>
+        <div class="form-group">
+        <label for="signup-password">email*</label>
+        <input type="email" id="signup-email" name="signup-password" required>
+        </div>
+        <div class="form-group">
+        <label for="signup-password">password*</label>
+        <input type="password" id="signup-password" name="signup-email" required>
+        </div>
+        <button type="submit" id="signup-submit-btn" class="auth-button">create account</button>
+        <p><a href="#" id="back-to-auth-initial-from-signup" class="auth-link">back</a></p>
+    </form>
+        </div>
+        <p id="auth-message" class="auth-feedback hidden"></p>
+    </div>
+</div>
+

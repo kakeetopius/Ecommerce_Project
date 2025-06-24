@@ -40,10 +40,30 @@ export function renderProducts(productsToRender) {
 	button.addEventListener('click', (event) => {
 	    const productId = event.currentTarget.dataset.productId;
 	    console.log(`Product ${productId} clicked to add to cart (cart logic not implemented here).`);
-	    // Placeholder for actual cart functionality
+	    addToCart(productId, 'main') ; 
 	});
     });
 }
 
+export async function addToCart(productId, page='cart', qty=1) {
+    const response = await fetch("/index.php/cart/add", {
+	method: "POST",
+	headers: {
+	    "Accept": "application/json",
+	    "Content-Type": "application/json",
+	},
+	body: JSON.stringify(
+	    {
+		"product_id" : productId,
+		"qty" : qty,
+	    }
+	)
+    });
+    const data = await response.json();
+
+    if (data.success && page === 'main') {
+	window.alert("Product successfully added to Cart");
+    }
+}	
 
 

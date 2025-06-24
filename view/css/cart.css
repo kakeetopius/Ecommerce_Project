@@ -1,7 +1,7 @@
 body {
   background-color: rgb(239, 136, 182);
   font-family: Arial, sans-serif;
-  padding: 20px;
+  padding: 15px;
   background: #f2f2f2;
 }
 
@@ -31,7 +31,7 @@ h1, h2 {
   border-radius: 4px;
 }
 
-button {
+button.cartButton {
   padding: 8px 12px;
   margin-top: 5px;
   background-color: #007bff;
@@ -116,3 +116,51 @@ button {
   background-color: #dc3545;
   color: white;
 }
+
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 25px; 
+    border-bottom: 1px solid #e0e0e0;
+    background-color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo-container {
+    position: absolute; 
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex; 
+    align-items: center;
+}
+
+#brand-logo {
+    height: 28px; /* Adjusted logo height */
+    object-fit: contain;
+}
+
+.header-icon {
+    background: none;
+    border: none;
+    padding: 4px; /* Slightly reduced padding for smaller feel */
+    color: #333;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+}
+.header-icon svg { /* Smaller and thinner icons */
+    width: 20px; 
+    height: 20px;
+    /* stroke-width is set in the SVG itself to 1.2 */
+}
+
+.header-actions {
+    display: flex;
+    gap: 15px; /* Adjusted gap */
+    align-items: center;
+}
+
