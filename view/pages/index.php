@@ -32,7 +32,7 @@
                 <!-- Elegant thin user/login icon -->
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
             </button>
-            <a href="/view/pages/cart.html" id="shopping-cart-link" class="header-icon" aria-label="View shopping cart">
+            <a href="/view/pages/cart.php" id="shopping-cart-link" class="header-icon" aria-label="View shopping cart">
                 <!-- Elegant thin cart icon -->
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V6l-3-4H6z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10c0-2.21-1.79-4-4-4S8 7.79 8 10"></path></svg>
             </a>
@@ -108,70 +108,8 @@
             </p>
         </div>
     </div>
-
-    <!-- ===================== AUTHENTICATION OVERLAY (Initially Hidden) ===================== -->
-    <div id="auth-overlay" class="overlay">
-        <div class="overlay-content auth-panel">
-            <div class="auth-header">
-                <h2>My Account</h2>
-                <button id="close-auth-btn" class="close-btn" aria-label="Close">×</button>
-            </div>
-
-            <!-- Initial view for Auth panel -->
-            <div id="auth-initial-section" class="auth-section">
-                <button id="show-login-form-btn" class="auth-button">Access your account</button>
-                <p class="auth-or-separator"><span>Or</span></p>
-                <div class="signup-prompt-inline">
-                    <p>Don't have an account yet?</p>
-                    <button id="show-signup-form-btn" class="auth-button-secondary">Create an account</button>
-                </div>
-            </div>
-
-            <!-- Login Form -->
-            <div id="login-form-section" class="auth-section hidden">
-                <h3>Login</h3>
-		<form id="login-form">
-		    <div class="form-group">
-			<label for="email">Email</label>
-			<input type="email" id="login-email" name="email" required>
-		    </div>
-		    <div class="form-group">
-			<label for="login-password">Password*</label>
-			<input type="password" id="login-password" name="login-password" required>
-		    </div>
-		    <button type="submit" id="login-submit-btn" class="auth-button">Login</button>
-		    <p><a href="#" id="back-to-auth-initial-from-login" class="auth-link">Back</a></p>
-		</form>
-            </div>
-
-            <!-- Signup Form -->
-            <div id="signup-form-section" class="auth-section hidden">
-                <h3>Create Account</h3>
-		<form id="signup-form">
-		    <div class="form-group">
-			<label for="signup-name">First Name*</label>
-			<input type="text" id="signup-name" name="signup-name" required>
-		    </div>
-		    <div class="form-group">
-			<label for="signup-surname">Last Name*</label>
-			<input type="text" id="signup-surname" name="signup-surname" required>
-		    </div>
-		    <div class="form-group">
-			<label for="signup-password">Email*</label>
-			<input type="email" id="signup-email" name="signup-password" required>
-		    </div>
-		    <div class="form-group">
-			<label for="signup-password">Password*</label>
-			<input type="password" id="signup-password" name="signup-email" required>
-		    </div>
-		    <button type="submit" id="signup-submit-btn" class="auth-button">Create Account</button>
-		    <p><a href="#" id="back-to-auth-initial-from-signup" class="auth-link">Back</a></p>
-		</form>
-            </div>
-            <p id="auth-message" class="auth-feedback hidden"></p>
-        </div>
-    </div>
-
-    <script type="module" src="../js/script.js"></script>
+    
+    <?php require_once("auth_section.html"); ?>
+   <script type="module" src="../js/script.js"></script>
 </body>
 </html>

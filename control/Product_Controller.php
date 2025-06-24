@@ -27,6 +27,18 @@
             return $products_json;
         }
 
+        public static function returnProduct($product_id) {
+            $product = Product::getProductByID($product_id);
+            $pdt_dict = [
+                "success"=>true,
+                "id" => $product->get_productID(),
+                "name" => $product->get_productName(),
+                "price" => $product->get_price(),
+                "image" => $product->get_imagePath()
+            ];
+
+            return json_encode($pdt_dict, JSON_NUMERIC_CHECK);
+        }
         public static function showProductByID() {
 
         }
