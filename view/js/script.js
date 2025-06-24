@@ -1,6 +1,7 @@
 // ===================== SCRIPT FOR MAISON DELMANCÉ (UPDATED) =====================
 import { domElements } from './domElements.js';
 import { renderProducts } from './product_rendering.js';
+import { setUpAuth } from './auth.js';
 
 export let allProducts;
 let currentProducts;
@@ -27,10 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
 	    currentProducts = [...allProducts];	    
 	    renderProducts([...allProducts].sort((a,b) => a.id - b.id)); // Initial sort by ID
 	    setUpSearchandFilter();
+	    setUpAuth();
 	})
 });
 
-function openOverlay(overlayElement) {
+export function openOverlay(overlayElement) {
     if (overlayElement) {
 	overlayElement.classList.add('active');
 	document.body.style.overflow = 'hidden'; 
@@ -39,7 +41,7 @@ function openOverlay(overlayElement) {
     }
 }
 
-function closeOverlay(overlayElement) {
+export function closeOverlay(overlayElement) {
     if (overlayElement) {
 	overlayElement.classList.remove('active');
 	document.body.style.overflow = '';
@@ -111,7 +113,7 @@ export function applyActiveFilters() {
     
     // 4. Season Display Order (if seasons selected)
     if (selectedSeasons.length > 0) {
-	 const seasonOrder = { summer: 1, fall: 2, winter: 3, spring: 4, all: 5 };
+	 const seasonOrder = { summer: 1, autumn: 2, winter: 3, spring: 4, all: 5 };
 	 productsToFilter.sort((a, b) => {
 	    const aOrder = seasonOrder[a.season] || 99; 
 	    const bOrder = seasonOrder[b.season] || 99;
