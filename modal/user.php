@@ -31,7 +31,6 @@
 
             $users = $dbCon->execute_and_getResult($query);
             if ($users == null) {
-                echo "User doesn't exist";
                 return null;
             }
             $user1 = $users[0];
@@ -77,6 +76,7 @@
                 echo "Error Adding User";
                 return false;
             }
+            return true;
         }
         
         public static function deleteUserByEmail($email) {

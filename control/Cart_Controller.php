@@ -1,8 +1,16 @@
 <?php
+    start_session();
+    $cart_array = $_SESSION['cart'];
 
     class CartControl {
-
+      
+     
         public static function addtoCart() {
+            if (!isset['cart']) {
+
+            }
+
+
 
         }
 
@@ -12,7 +20,7 @@
 
         public static function updateQuantity() {
 
-        }
+        }  
 
         public static function viewCart() {
 

@@ -9,7 +9,8 @@
 // will be loaded to the pages with the view pages and
 // sent back]
 // If async json is sent back for js to load in the page.
-session_start();
+
+//setup the session information
 
 $received_url = $_SERVER['REQUEST_URI'];
 
@@ -31,7 +32,31 @@ if ($route === "product") {
             header("Content-Type: application/json");
             echo ProductControl::returnAllProducts();
             exit;
+        case 'cart':
+            
     }
+}
+else if ($route === 'user') {
+    $rawData = file_get_contents("php://input");
+    $data = json_decode($rawData, true);
+    require_once("control/User_Controller.php");
+    header("Content-Type: application/json");
+
+    switch($function) {
+        case 'login':
+            echo UserControl::login($data['email'], $data['password']);
+            exit;
+        case 'signup':
+            echo UserControl::signup($data['fname'], $data['lname'], $data['email'], $data['pass']);
+            exit;
+        case 'userinfo':
+            echo UserControl::getProfile();
+            exit;
+        case 'logout':
+            UserControl::logout();
+            exit;
+    }
+
 }
 
 
