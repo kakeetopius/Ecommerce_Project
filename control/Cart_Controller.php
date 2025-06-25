@@ -15,9 +15,7 @@
                 $_SESSION['cart'] = array();
             }
 
-            else {
-                $_SESSION['cart'][$product_id] = $qty;
-            }  
+            $_SESSION['cart'][$product_id] = $qty;
 
             return json_encode([
                 'success' => true,
@@ -86,20 +84,26 @@
             return json_encode(["success"=>true, "total"=>$sum], JSON_NUMERIC_CHECK);
         }
 
-        public static function updateQuantity() {
+        public static function confirmOrder() {
+            if (!isset($_SESSION['user_id'])) {
+                return json_encode(["success"=>false, "message"=>"notLoggedIn"]);
+            }
+            
+            if (isset($_SESSION['cart'])) {
+                unset($_SESSION['cart']);
+            }
 
+            return json_encode(["success"=>true]);
+            
         }  
-
-        public static function viewCart() {
-
-        }
-
+        
         public static function clearCart() {
+            if(!isset($_SESSION['user_id']) || !isset($_SESSION['cart'])){
+                return json_encode(["success"=>false]);
+            }
 
+            unset($_SESSION['cart']);
+            return json_encode(["success"=>true]);
         }
-
-        public static function checkout() {
-        }
-
     }
 ?>

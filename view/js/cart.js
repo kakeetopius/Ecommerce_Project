@@ -1,9 +1,10 @@
 import { domElements} from "./domElements.js";
+import { openOverlay, closeOverlay  } from "./script.js";
 import { setUpAuth} from "./auth.js";
 import { addToCart } from "./product_rendering.js";
 
-let products = []
-
+let products = [];
+let user_cart = [];
 // Get HTML elements for products, cart display, total, and buttons
 const cartContainer = document.getElementById("cart-container");
 const cartTotal = document.getElementById("cart-total");
@@ -15,11 +16,34 @@ document.addEventListener('DOMContentLoaded', async () => {
     renderCart();
     setUpAuth();
     setUpCartButtons();
-})
+});
 
 function setUpCartButtons() {
     clearCartBtn.addEventListener('click', clearCart);
+    checkoutBtn.addEventListener('click', checkOut);
 }
+
+
+async function checkOut() {
+    const response = await fetch("/index.php/user/userinfo");
+    const data = await response.json();
+
+    if(!data.success) {
+	window.alert("First Sign In or Sign Up");
+	openOverlay(domElements.authOverlay);
+	return;
+    }
+    
+    if(user_cart.length === 0) {
+	window.alert("Cart Empty. Do some shopping First");
+	window.location.href = "/";
+	return;
+    }
+    
+    window.location.href = "/index.php/cart/checkout"; 
+
+}
+
 async function getCartContent() {
     try {
         const response = await fetch("/index.php/cart/get");
@@ -27,7 +51,7 @@ async function getCartContent() {
         
         if (!data.success) return;
         
-        const user_cart = data.cart;
+        user_cart = data.cart;
 
         for (const product of user_cart) {
             await getProduct(product.pdt_id, product.qty);
@@ -107,7 +131,7 @@ async function updateQuantity(id, newQty) {
     }
 }
 
-async function removeFromCart(id) {
+export async function removeFromCart(id) {
     const response = await fetch("/index.php/cart/remove", {
     method: "POST",
     headers: {
@@ -137,7 +161,7 @@ async function removeFromCart(id) {
 
 }
 
-async function clearCart() {
+export async function clearCart() {
     for(const pdt of products) {
 	await removeFromCart(pdt.id);
     }
