@@ -10,7 +10,6 @@
         private $email = "";
         private $pass = "";
         private $cart;
-        private ?Order $orders;
         
         public function __construct($id, $fname, $lname, $email, $pass) {
             $this->userid = $id; 
@@ -19,7 +18,6 @@
             $this->email = $email; 
             $this->pass = $pass; 
             $this->cart = array();
-            $this->orders = null;
         }
         
         
@@ -92,86 +90,6 @@
             }
         }
         
-        public function getOrder() {
-            if ($this->orders === null)  { 
-                $this->orders = Order::getUserOrder($this->userid);
-            }
-            
-            return $this->orders;
-
-        }
-         
-        public function getcart() {
-            return $this->cart;
-        }
-        
-        public function setcart(array $cart) {
-            $this->cart = $cart;
-        }
-
-        public function add_to_cart($product_id, $quantity) {
-            if (isset($this->cart[$product_id])) {
-                return;
-            }
-
-            $this->cart[$product_id] = $quantity;
-        }
-        
-        public function remove_from_cart($product_id) {
-            if (!isset($this->cart[$product_id])) {
-                return;
-            }
-
-            unset($this->cart[$product_id]);
-        }
-
-        public function change_qty_in_cart($product_id, $new_quantity) {
-            $this->cart[$product_id] = $new_quantity;
-        }
-
-        public function cartToOrder() {
-            if (count($this->cart) == 0) {
-                return;
-            }
-            
-            $user_order = Order::createOrder($this->userid);
-            
-            if ($user_order == null) {
-                echo "Order object is null\n";
-                return;
-            }
-
-            foreach($this->cart as $pdt_id => $quantity) {
-                $user_order->addtoOrder($pdt_id, $quantity);
-            }
-        }
-
-        public function getcartTotal() {
-            
-            if (count($this->cart) == 0) {
-                return 0;
-            }
-
-            $sum = 0;
-
-            foreach ($this->cart as $pdt_id => $qty) {
-                $product = Product::getProductByID($pdt_id);
-                $sum = $sum + ($product->get_price() * $qty);
-            }
-
-            return $sum;
-        }
-
-        public function empty_cart() {
-            if (count($this->cart) == 0) {
-                return;
-            }
-
-            foreach (array_keys($this->cart) as $key) {
-                unset($this->cart[$key]);
-            }
-        }
-
         public function get_fname() {
             return $this->fname;
         }
@@ -200,9 +118,6 @@
             return $this->cart;
         }
 
-        public function __toString() {
-            return "UserID: {$this->get_UserId()}\nName: {$this->get_name()}\nEmail: {$this->get_email()}";
-        }
     }
     
 ?>

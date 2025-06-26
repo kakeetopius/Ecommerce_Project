@@ -117,38 +117,7 @@
             return $this->categories;
         }
         
-        public function isInCategory($category_name, $category_value) {
-            if (count($this->categories) == 0) {
-                Product::loadCategory($this->categories);
-            }
-            
-            if (!array_key_exists($category_name, $this->categories)) {
-                return false;
-            }
 
-            if($this->categories[$category_name] == $category_value) {
-                return true;
-            }
-            
-            return false;
-        }
-
-        public function getCatStr() {
-            if (count($this->categories) == 0) {
-                Product::loadCategory($this->product_id);
-            }
-            $cat_str = "";
-            foreach($this->categories as $key => $value) {
-                if (isset($value)) {
-                    $cat_str = $cat_str . "{$key}: {$value}\n";
-                }
-            }
-            return $cat_str;
-        }
-
-        public function __toString() {
-            return "ID: {$this->get_productID()}\nProduct Name: {$this->get_productName()}\nPrice: {$this->get_price()}\nStock: {$this->get_stock()}\nCategories:\n{$this->getCatStr()}\n";
-        }
     }
     
     

@@ -39,18 +39,6 @@
 
             return json_encode($pdt_dict, JSON_NUMERIC_CHECK);
         }
-        public static function showProductByID() {
-
-        }
-
-        public static function filterByCategory() {
-
-        }
-
-        public static function searchByKeyword() {
-
-        }
-
     }
 
     
