@@ -7,7 +7,7 @@
 // or session array
 // the controllers will include the data and the data 
 // will be loaded to the pages with the view pages and
-// sent back]
+// sent back
 // If async json is sent back for js to load in the page.
 
 //setup the session information
