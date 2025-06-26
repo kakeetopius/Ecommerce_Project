@@ -1,4 +1,5 @@
 import { domElements } from "./domElements.js";
+import { openOverlay, closeOverlay  } from "./script.js";
 
 export function renderProducts(productsToRender) {
     domElements.productCatalog.innerHTML = ''; 
@@ -63,6 +64,10 @@ export async function addToCart(productId, page='cart', qty=1) {
 
     if (data.success && page === 'main') {
 	window.alert("Product successfully added to Cart");
+    }
+    else if (!data.success && data.message === "notLoggedIn") {
+	window.alert("Login First to add to Cart");
+	openOverlay(domElements.authOverlay);
     }
 }	
 

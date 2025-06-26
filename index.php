@@ -7,7 +7,7 @@
 // or session array
 // the controllers will include the data and the data 
 // will be loaded to the pages with the view pages and
-// sent back]
+// sent back
 // If async json is sent back for js to load in the page.
 
 //setup the session information
@@ -82,6 +82,15 @@ else if ($route === 'cart') {
             exit;
         case 'total':
             echo CartControl::getTotal();
+            exit;
+        case 'checkout':
+            header("Location: /view/pages/payment_page.html");
+            exit;
+        case 'confirm':
+            echo CartControl::confirmOrder();
+            exit;
+        case 'clear':
+            echo CartControl::clearCart();
             exit;
     }
 }

@@ -72,16 +72,6 @@
 
         }
 
-        public static function updateProfile() {
-
-        }
-
-        
     }
-
-
-
-
-
 
 ?>
