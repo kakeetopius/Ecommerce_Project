@@ -17,5 +17,5 @@
 
 4. Visit the webiste at the following url
 >```text
->https://localhost:8080
+>http://localhost:8080
 >```
