@@ -10,7 +10,7 @@
 
 2. Ensure docker is installed. If not use your preferred package manager.
 
-3. Spin up the containers with the following
+3. Spin up the containers with the following. It might take some time to fetch the images used (apache-php and mysql) if not already available
 >```bash
 >docker compose up -d --build
 >```
@@ -18,4 +18,9 @@
 4. Visit the webiste at the following url
 >```text
 >http://localhost:8080
+>```
+
+5. After testing out, you can stop the containers with the following
+> ```bash
+>docker compose down
 >```
