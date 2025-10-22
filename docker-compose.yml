@@ -1,0 +1,24 @@
+services:
+  web:
+    build: 
+      context: .
+      target: web
+      dockerfile: Dockerfile
+    container_name: php-web
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+
+  db:
+    build: 
+      context: .
+      target: db
+      dockerfile: Dockerfile
+    container_name: mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "rootp@ssw0rd98765"
+      MYSQL_USER: "eUser"
+      MYSQL_PASSWORD: "myUser1234"
+      MYSQL_DATABASE: "ecommerce"
