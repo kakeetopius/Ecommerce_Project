@@ -22,7 +22,7 @@
 
         private static function loadProducts() {
             $db = new DBCon();
-            $query = "SELECT * FROM Product";
+            $query = "SELECT * FROM product";
             $query = $db->prepareStatement($query);
             
             $products = $db->execute_and_getResult($query);
@@ -35,7 +35,7 @@
     
         private static function loadCategory($product_id) {
             $db = new DBCon();
-            $query = "SELECT * FROM Category WHERE product_id = ?";
+            $query = "SELECT * FROM category WHERE product_id = ?";
             $query = $db->prepareStatement($query);
             $query->bind_param("i", $product_id);
                      
@@ -58,7 +58,7 @@
 
         public static function getProductByID($product_id) {
             $db = new DBCon();
-            $query = "SELECT * FROM Product WHERE product_id = ?";
+            $query = "SELECT * FROM product WHERE product_id = ?";
             $query = $db->prepareStatement($query);
             $query->bind_param("i", $product_id);
 
@@ -82,7 +82,8 @@
             $new_stock = $current_stock + $change_in_stock;
 
             $db = new DBCon();
-            $query = "UPDATE Product SET stock = ? WHERE product_id = ?";
+            $query = "UPDATE product SET stock = ? WHERE product_id = ?";
+
             $query = $db->prepareStatement($query);
             $query->bind_param("ii", $new_stock, $this->product_id);
             return $db->execute_query($query);

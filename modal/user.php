@@ -23,7 +23,7 @@
         
         public static function getUserByEmail($email) { 
             $dbCon = new DBCon(); 
-            $query = "SELECT * FROM User WHERE email = ?";
+            $query = "SELECT * FROM user WHERE email = ?";
             $query = $dbCon->prepareStatement($query);
             $query->bind_param("s", $email);
 
@@ -40,7 +40,7 @@
         public static function getUserById($id) {
             
             $dbCon = new DBCon();
-            $query = "SELECT * FROM User WHERE user_id = ?";
+            $query = "SELECT * FROM user WHERE user_id = ?";
             $query = $dbCon->prepareStatement($query);
             $query->bind_param("i", $id);
 
@@ -57,7 +57,7 @@
         
         public static function addUser(User $user) {
             $db = new DBCon();
-            $query = "INSERT INTO User(fname, lname, email, password) VALUES (?, ?, ?, ?)";
+            $query = "INSERT INTO user(fname, lname, email, password) VALUES (?, ?, ?, ?)";
             $query = $db->prepareStatement($query);
 
             $fname = $user->get_fname();
@@ -79,7 +79,7 @@
         
         public static function deleteUserByEmail($email) {
             $db = new DBCon();
-            $query = "DELETE FROM User WHERE email = ?";
+            $query = "DELETE FROM user WHERE email = ?";
             $query = $db->prepareStatement($query);
 
             $query->bind_param("s", $email);
