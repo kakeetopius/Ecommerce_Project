@@ -8,7 +8,7 @@
 >cd maison_delamance
 >```
 
-2. Ensure docker is installed. If not use your preferred package manager.
+2. Ensure docker and docker-compose is installed. If not use your preferred package manager.
 
 3. Spin up the containers with the following. It might take some time to fetch the images used (apache-php and mysql) if not already available
 >```bash
