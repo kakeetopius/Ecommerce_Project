@@ -4,7 +4,7 @@
 
 1. Clone the repository.
 >```bash
->git clone https://github.com/kakeetopius/Ecommerce_Project.git maison_delamance
+>git clone https://github.com/kakeetopius/maison-delamance.git maison-delamance
 >cd maison_delamance
 >```
 
