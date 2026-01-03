@@ -17,7 +17,7 @@
         
         public static function createOrder($userid) {
             $status = "pending";
-            $query = "INSERT INTO Orders (user_id, status) VALUES (?, ?)";
+            $query = "INSERT INTO orders (user_id, status) VALUES (?, ?)";
             $db = new DBCon();
             $query = $db->prepareStatement($query);
             $query->bind_param("is", $userid, $status);
@@ -32,7 +32,7 @@
         
         public static function getUserOrder($userid) {
             $db = new DBCon();
-            $query =  "SELECT * FROM Orders WHERE user_id = ?";
+            $query =  "SELECT * FROM orders WHERE user_id = ?";
             $query = $db->prepareStatement($query);
             $query->bind_param("i", $userid);
 
@@ -55,7 +55,7 @@
             }
 
             $db = new DBCon();
-            $query = "INSERT INTO Order_item VALUES (?, ?, ?)";
+            $query = "INSERT INTO order_item VALUES (?, ?, ?)";
             $query = $db->prepareStatement($query);
             $query->bind_param("iii", $this->order_no, $product_id, $quantity);
              
@@ -72,7 +72,7 @@
             $items = $this->getOrderItems();
 
             $db = new DBCon();
-            $query = "DELETE FROM Orders WHERE order_no = ?";
+            $query = "DELETE FROM orders WHERE order_no = ?";
             $query = $db->prepareStatement($query);
             $query->bind_param("i", $this->order_no);
             
@@ -95,7 +95,7 @@
 
         private function setOrderItems() {
             $db = new DBCon();
-            $query = "SELECT * FROM Order_item WHERE order_no = ?";
+            $query = "SELECT * FROM order_item WHERE order_no = ?";
             $query = $db->prepareStatement($query);
             $query->bind_param("i", $this->order_no);
 
@@ -151,7 +151,7 @@
             }
 
             $db = new DBCon();
-            $query = "UPDATE Orders SET status = ? WHERE order_no = ?";
+            $query = "UPDATE orders SET status = ? WHERE order_no = ?";
             $query = $db->prepareStatement($query);
             $query->bind_param("si", $status, $this->order_no);
 
