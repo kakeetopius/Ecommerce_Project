@@ -10,9 +10,9 @@
 
 2. Ensure docker and docker-compose is installed. If not use your preferred package manager.
 
-3. Spin up the containers with the following. It might take some time to fetch the images used (apache-php and mysql) if not already available
+3. Spin up the containers with the following. 
 >```bash
->docker compose up -d --build
+>docker compose up -d
 >```
 
 4. Visit the webiste at the following url
